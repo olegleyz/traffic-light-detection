@@ -2,7 +2,7 @@
 
 # usage python bosch-to-tfrecords.py --output_path=train.record
 import tensorflow as tf
-from models.research.object_detection.utils import dataset_util
+from object_detection.utils import dataset_util
 from tqdm import tqdm
 import yaml
 import os
