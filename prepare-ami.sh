@@ -31,9 +31,9 @@ rm non-commercial_license.docx
 #cd ~/models/model
 echo "downloading pretrained models"
 wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
-http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 tar -xf ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
 rm ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
+wget http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 tar -xf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 rm faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 echo "installing dependencies"
