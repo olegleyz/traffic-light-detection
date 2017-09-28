@@ -4,8 +4,11 @@
 # clone TensorFlow repo to the instance 
 echo "cloning tensorflow lib"
 git clone https://github.com/tensorflow/models.git
+sudo mv models/research/object_detection ./
+sudo mv models/research/slim ./
+
+echo -e "\n downloading bosch dataset"
 mkdir data && cd data
-echo "downloading bosch dataset"
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.001
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.002
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.003
@@ -29,7 +32,7 @@ rm dataset_train_rgb.zip
 rm non-commercial_license.docx
 # download the pretrained model
 #cd ~/models/model
-echo "downloading pretrained models"
+echo -e "\n downloading pretrained models"
 wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
 tar -xf ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
 rm ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
@@ -37,17 +40,18 @@ wget http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet10
 tar -xf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 rm faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 cd ..
-echo "installing dependencies"
+echo -e "\n installing dependencies"
 pip install tensorflow-gpu
 pip install tqdm
-echo "generating tfrecords"
+echo -e "\n generating train tfrecords"
 chmod +x "bosch-to-tfrecords.py"
 ./bosch-to-tfrecords.py --output_path=data/train.record
+echo -e "\n generating test tfrecords"
 chmod +x "bosch-to-tfrecords-test.py" 
 ./bosch-to-tfrecords-test.py --output_path=data/test.record
 
 # set up protobuf
-echo "set up protobuf"
+echo -e "\n set up protobuf"
 # https://gist.github.com/sofyanhadia/37787e5ed098c97919b8c593f0ec44d8
 curl -OL https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip
 unzip protoc-3.4.0-linux-x86_64.zip
@@ -57,17 +61,14 @@ sudo mv include/* /usr/local/include/
 rm -r include
 
 # # Protobuf compilation (object detection installation dependencies)
-# cd models/research/
-# protoc object_detection/protos/*.proto --python_out=.
 
-# # add libraries to python path (object detection installation dependencies)
+protoc object_detection/protos/*.proto --python_out=.
+
+# add libraries to python path (object detection installation dependencies)
 # # From tensorflow/models/research/
-# export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-# #Testing the Installation
-# python object_detection/builders/model_builder_test.py
-
-# # create structure and copy config 
-
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+#Testing the Installation
+python object_detection/builders/model_builder_test.py
 
 
 # # train model 
