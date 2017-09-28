@@ -74,7 +74,7 @@ def gen_label_map():
       for i in range(1, len(nums)+1):
         file.write('item {\n')
         file.write('  id: {}\n'.format(i))
-        file.write('  name: {}\n'.format(keys[nums.index(i)]))
+        file.write("  name: '{}'\n".format(keys[nums.index(i)]))
         file.write('}\n\n')
     except Exception as e:
       print(e)
@@ -88,7 +88,7 @@ def main(_):
       for elem in tqdm(examples):  
         tf_example = create_tf_example(elem)
         writer.write(tf_example.SerializeToString())
-      gen_label_map()
+      #gen_label_map() 
     except yaml.YAMLError as exc:
       print(exc)
 

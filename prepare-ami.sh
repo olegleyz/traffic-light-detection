@@ -6,7 +6,10 @@ echo "cloning tensorflow lib"
 git clone https://github.com/tensorflow/models.git
 sudo mv models/research/object_detection ./
 sudo mv models/research/slim ./
-
+mkdir model && cd model
+mkdir train
+mkdir eval
+cd ..
 echo -e "\n downloading bosch dataset"
 mkdir data && cd data
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.001
@@ -60,30 +63,9 @@ rm -r bin
 sudo mv include/* /usr/local/include/
 rm -r include
 
-# # Protobuf compilation (object detection installation dependencies)
-
+# Protobuf compilation (object detection installation dependencies)
 protoc object_detection/protos/*.proto --python_out=.
-
 # add libraries to python path (object detection installation dependencies)
-# # From tensorflow/models/research/
 export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 #Testing the Installation
 python object_detection/builders/model_builder_test.py
-
-
-# # train model 
-# python object_detection/train.py \
-#     --logtostderr \
-#     --pipeline_config_path=../model/ssd_mobilenet_v1_coco.config \
-#     --train_dir=../model/train
-
-# python object_detection/eval.py \
-#     --logtostderr \
-#     --pipeline_config_path=../model/ssd_mobilenet_v1_coco.config \
-#     --checkpoint_dir=../model/train \
-#     --eval_dir=../model/eval
-
-# python object_detection/train.py \
-#     --logtostderr \
-#     --pipeline_config_path=../model/faster_rcnn_traffic_bosch.config \
-#     --train_dir=../model/train
