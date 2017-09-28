@@ -36,6 +36,12 @@ rm ssd_mobilenet_v1_coco_11_06_2017.tar.gz
 wget http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 tar -xf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 rm faster_rcnn_resnet101_coco_11_06_2017.tar.gz
+echo "generating tfrecords"
+chmod +x "bosch-to-tfrecords.py"
+./bosch-to-tfrecords.py
+chmod +x "bosch-to-tfrecords-test.py"
+./bosch-to-tfrecords-test.py
+cd ..
 echo "installing dependencies"
 pip install tensorflow-gpu
 pip install tqdm

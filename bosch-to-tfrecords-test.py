@@ -1,3 +1,4 @@
+#!/home/ubuntu/anaconda3/bin/python
 # usage python bosch-to-tfrecords.py --output_path=train.record
 import tensorflow as tf
 from models.research.object_detection.utils import dataset_util
