@@ -1,8 +1,11 @@
+#!/bin/bash
 # connect to the instance with security key in ~/.ssh/
 #
 # clone TensorFlow repo to the instance 
+echo "cloning tensorflow lib"
 git clone https://github.com/tensorflow/models.git
 mkdir data && cd data
+echo "downloading bosch dataset"
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.001
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.002
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.003
@@ -26,17 +29,19 @@ rm dataset_train_rgb.zip
 rm non-commercial_license.docx
 # download the pretrained model
 #cd ~/models/model
+echo "downloading pretrained models"
 wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
 http://download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 tar -xf ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
 rm ssd_mobilenet_v1_coco_11_06_2017.tar.gz 
 tar -xf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
 rm faster_rcnn_resnet101_coco_11_06_2017.tar.gz
-
+echo "installing dependencies"
 pip install tensorflow-gpu
 pip install tqdm
 
 # set up protobuf
+echo "set up protobuf"
 # https://gist.github.com/sofyanhadia/37787e5ed098c97919b8c593f0ec44d8
 curl -OL https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip
 unzip protoc-3.4.0-linux-x86_64.zip
