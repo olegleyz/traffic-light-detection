@@ -11,7 +11,7 @@ mkdir train
 mkdir eval
 cd ..
 echo -e "\n downloading bosch dataset"
-mkdir data && cd data
+cd data
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.001
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.002
 wget https://s3-us-west-1.amazonaws.com/bosch-tl/dataset_test_rgb.zip.003
